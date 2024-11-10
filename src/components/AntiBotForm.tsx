@@ -21,36 +21,58 @@ export default function AntiBotForm() {
     formData.append('email', e.currentTarget.email.value)
     formData.append('csrfToken', e.currentTarget.csrfToken.value)
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`)
-    }
-
     const response = await fetch('/api/submit-form', {
       method: 'POST',
       body: formData,
     })
 
-    const result = await response.json();
+    const result = await response.json()
 
-    if(result.isSuccess) {
-      alert("success")
-    }
-
-    if(!result.isSuccess) {
-      alert("fail")
+    if (result.isSuccess) {
+      alert("Form submitted successfully!")
+    } else {
+      alert("Failed to submit form. Please try again.")
     }
   }
 
   return (
-    <form className="flex flex-col gap-y-4 max-w-screen-lg mx-auto" onSubmit={handleSubmit}>
-      <span className="text-white">csrfToken: {csrfToken}</span>
+    <form className="flex flex-col max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6" onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-semibold text-gray-800 text-center">Anti-Bot Verification</h2>
+      
+      {/* Hidden CSRF Token */}
       <input name="csrfToken" type="hidden" value={csrfToken} />
-      <input name="username" type="text" placeholder="Username" required />
-      <input name="email" type="email" placeholder="Email" required />
-      <button className="btn border-teal-200 bg-emerald-600 py-4" type="submit">
+      
+      {/* Username Input */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Username</label>
+        <input 
+          name="username" 
+          type="text" 
+          placeholder="Enter your username" 
+          required 
+          className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:ring-emerald-600 focus:border-emerald-600"
+        />
+      </div>
+
+      {/* Email Input */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <input 
+          name="email" 
+          type="email" 
+          placeholder="Enter your email" 
+          required 
+          className="mt-1 p-3 border border-gray-300 rounded-md w-full focus:ring-emerald-600 focus:border-emerald-600"
+        />
+      </div>
+
+      {/* Submit Button */}
+      <button 
+        className="w-full py-3 bg-emerald-600 text-white font-semibold rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-opacity-50"
+        type="submit"
+      >
         Submit
       </button>
     </form>
   )
 }
-
