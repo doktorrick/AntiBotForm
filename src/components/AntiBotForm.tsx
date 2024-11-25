@@ -50,8 +50,7 @@ export default function ContactForm() {
     const form = e.currentTarget;
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
-    const message = (form.elements.namedItem("message") as HTMLTextAreaElement)
-      .value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
 
     const timeElapsed = (Date.now() - startTime) / 1000;
     if (timeElapsed < 3) {
